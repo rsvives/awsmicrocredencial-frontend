@@ -82,7 +82,7 @@ export const Index = () => {
                             <h2 className="font-medium text-lg mb-3">🍕 Your ordered pizza:</h2>
                             <div>
                                 <p><b>id:</b> {orderDetails.order.Id}</p>
-                                <p><b>status:</b> {orderDetails.order.orderStatus}</p>
+                                <p className="flex gap-2"><b>status:</b> {orderDetails.order.orderStatus === 'created' ? <span className="flex gap-2 items-center">Processing <Spinner></Spinner></span> : <span>✅ Processed</span>} </p>
                                 <p><b>price:</b> {orderDetails.order.price}€</p>
                                 <p><b>username:</b> {orderDetails.order.username}</p>
                             </div>
@@ -91,7 +91,7 @@ export const Index = () => {
                 }
             </section>
 
-        </div>
+        </div >
     )
 
 }
