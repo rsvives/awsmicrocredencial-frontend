@@ -2,13 +2,19 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useCreateOrder } from "@/hooks/use-orders";
+import { useCreateOrder, useOrder } from "@/hooks/use-orders";
 import { useState, type SubmitEvent } from "react";
+import { Spinner } from "../ui/spinner";
+import { Skeleton } from "../ui/skeleton";
 
-export const NewOrderPage = ({ handleNewOrder }: { handleNewOrder: (id: string) => void }) => {
+export const Index = () => {
 
+    const [orderId, setOrderId] = useState('')
     const [formData, setFormData] = useState({ price: 0, username: '' })
-    const { mutateAsync, isPending, } = useCreateOrder();
+    const { mutateAsync, isPending } = useCreateOrder();
+    const { data: orderDetails, isLoading } = useOrder(orderId)
+
+
 
     const pizzas = {
         margherita: {
@@ -29,9 +35,9 @@ export const NewOrderPage = ({ handleNewOrder }: { handleNewOrder: (id: string) 
         e.preventDefault()
         console.log(formData)
         const createdOrder = await mutateAsync(formData);
-
         console.log(createdOrder)
-        handleNewOrder(createdOrder.order.Id)
+        if (createdOrder.order.Id) setOrderId(createdOrder.order.Id)
+
 
     };
 
@@ -63,9 +69,29 @@ export const NewOrderPage = ({ handleNewOrder }: { handleNewOrder: (id: string) 
 
                 </Field>
                 <Button className="mt-auto" size='lg' type="submit" disabled={isPending}>
-                    {isPending ? 'Loading...' : 'Order Now! 🍕'}
+                    {isPending || isLoading ? 'Loading...' : 'Order Now! 🍕'}
                 </Button>
             </form>
+
+            <section id="order-details" className="min-h-40 mt-4 flex flex-col">
+
+                {isLoading || isPending ? <Skeleton className="flex flex-1 items-center justify-center rounded-xl "><Spinner /></Skeleton> :
+                    (orderDetails &&
+                        <>
+
+                            <h2 className="font-medium text-lg mb-3">🍕 Your ordered pizza:</h2>
+                            <div>
+                                <p><b>id:</b> {orderDetails.order.Id}</p>
+                                <p><b>status:</b> {orderDetails.order.orderStatus}</p>
+                                <p><b>price:</b> {orderDetails.order.price}€</p>
+                                <p><b>username:</b> {orderDetails.order.username}</p>
+                            </div>
+
+                        </>)
+                }
+            </section>
+
         </div>
     )
+
 }

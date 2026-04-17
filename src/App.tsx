@@ -1,20 +1,21 @@
-import { OrderDetailsPage } from "./components/pages/OrderDetails/OrderDetailsPage"
-import { NewOrderPage } from "./components/pages/NewOrder/NewOrderPage"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
-import { useState } from "react"
+// import { OrderDetailsPage } from "./components/pages/OrderDetails/OrderDetailsPage"
+// import { NewOrderPage } from "./components/pages/NewOrder/NewOrderPage"
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs"
+// import { useState } from "react"
+import { Index } from "./components/pages/Index"
 
 function App() {
 
-  const [orderId, setOrderId] = useState("")
+  // const [orderId, setOrderId] = useState("")
 
-  const handleNewOrder = (id: string) => {
-    console.log(id)
-    setOrderId(id)
-  }
+  // const handleNewOrder = (id: string) => {
+  //   console.log(id)
+  //   setOrderId(id)
+  // }
 
   return (
     <>
-      <Tabs defaultValue="new_order">
+      {/* <Tabs defaultValue="new_order">
         <div className="flex justify-center">
           <TabsList >
             <TabsTrigger value="new_order">New order</TabsTrigger>
@@ -28,9 +29,9 @@ function App() {
         <TabsContent value="order_details">
           <OrderDetailsPage orderId={orderId} />
         </TabsContent>
-      </Tabs>
+      </Tabs> */}
 
-
+      <Index />
 
     </>
   )

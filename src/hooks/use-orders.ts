@@ -5,6 +5,11 @@ export const useOrder = (id: string) => {
     return useQuery({
         queryKey: ["orders", id],
         queryFn: () => ordersService.findOrder(id),
+        // refetchInterval: (query) => {
+        //     const status = query.state.data?.order.orderStatus;
+        //     // Solo hace polling si está pendiente
+        //     return status === 'created' ? 5000 : false;
+        // },
         enabled: !!id
     })
 }
